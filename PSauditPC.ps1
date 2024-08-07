@@ -10,13 +10,21 @@ $Emplacement = [System.IO.Path]::GetDirectoryName($myInvocation.MyCommand.Defini
 cd $Emplacement
 
 # Création du corps du message
-$MsgCorps = ("<html><head><meta charset='utf-8'><style>body{font-family:Arial, Helvetica, sans-serif; font-size:12px; background:#efefef; max-width:980px; margin:auto;} table{border:1px; border-collapse:collapse; width:100%;} h1{color:#008fd3; text-align:center;} h2{color:rgb(18, 41, 77); text-align:center;} table tbody tr td{border:1px solid rgb(18, 41, 77); padding:5px; background:#fff;} table thead tr{background:rgb(18, 41, 77);} table thead tr th{border:1px solid rgb(18, 41, 77); color:#fff; padding:5px;}</style></head>")
+$MsgCorps = ("<html><head><meta charset='utf-8'><style>body{font-family:Arial, Helvetica, sans-serif; font-size:12px; background:#efefef; max-width:980px; margin:auto;} table{border:1px; border-collapse:collapse; width:100%;} h1{color:#008fd3; text-align:center; font-size:54px;} h2{color:rgb(18, 41, 77); text-align:center;} table tbody tr td{border:1px solid rgb(18, 41, 77); padding:5px; background:#fff;} table thead tr{background:rgb(18, 41, 77);} table thead tr th{border:1px solid rgb(18, 41, 77); color:#fff; padding:5px;}</style></head>")
 $MsgCorps += ("<body><h1>PSauditPC</h1>")
+
+$dateActuelle = Get-Date -Format "dd/MM/yyyy HH:mm"
+
+$MsgCorps += ("<p><b>Analyse réalisée le :</b> "+$dateActuelle+"</p>")
 
 # Ordinateur audité
 $MsgCorps += "<h2>Ordinateur audité</h2>"
-$MsgCorps += "<table><thead><tr><th>Nom d'hôte</th><th>Domaine</th><th>Domaine DNS</th></tr></thead><tbody>"
-$MsgCorps += "<tr><td>"+$env:ComputerName+"</td><td>"+$env:UserDomain+"</td><td>"+$env:UserDNSDomain+"</td></tr>"
+$MsgCorps += "<table><thead><tr><th>Propriété</th><th>Valeur</th></tr></thead><tbody>"
+$MsgCorps += "<tr><td><b>Nom d'hôte</b></td><td>"+$env:ComputerName+"</td></tr>"
+$MsgCorps += "<tr><td><b>Domaine</b></td><td>"+$env:UserDomain+"</td></tr>"
+$MsgCorps += "<tr><td><b>Domaine DNS</b></td><td>"+$env:UserDNSDomain+"</td></tr>"
+$MsgCorps += "<tr><td><b>Système d'exploitation</b></td><td>"+(Get-WmiObject Win32_OperatingSystem).Caption+"</td></tr>"
+
 $MsgCorps += "</tbody></table>"
 
 #
