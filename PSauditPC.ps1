@@ -160,6 +160,19 @@ switch($WSUSAUOptions)
     default{$MsgCorps += "<tr><td>Mises à jour automatiques (via WSUS)</td><td><span style=`"color:blue`">Etat inconnu</span></td></tr>"}
 }
 
+#
+# Mise à jour WSUS
+#
+$WUDO = (Get-ItemProperty 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\DeliveryOptimization').DODownloadMode
+switch($WUDO)
+{
+    0{$MsgCorps += "<tr><td>Windows Update Delivery Optimization</td><td><span style=`"color:orange`">Activé : HTTP uniquement</span></td></tr>"}
+    1{$MsgCorps += "<tr><td>Windows Update Delivery Optimization</td><td><span style=`"color:orange`">Activé : Réseau local seulement</span></td></tr>"}
+    2{$MsgCorps += "<tr><td>Windows Update Delivery Optimization</td><td><span style=`"color:orange`">Activé : Réseau local et internet</span></td></tr>"}
+    99{$MsgCorps += "<tr><td>Windows Update Delivery Optimization</td><td><span style=`"color:green`">Désactivé</span></td></tr>"}
+    default{$MsgCorps += "<tr><td>Windows Update Delivery Optimization</td><td><span style=`"color:blue`">Etat inconnu</span></td></tr>"}
+}
+
 $MsgCorps += "</tbody></table>"
 
 ##############################################
