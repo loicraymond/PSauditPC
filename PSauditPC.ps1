@@ -1,9 +1,9 @@
 #--------------------------------------------
 #
 # Nom : PSauditPC.ps1
-# Date : 13/08/2024
+# Date : 15/12/2025
 # Auteur : Loïc RAYMOND
-# Version : 1.5 
+# Version : 1.6 
 # 
 #--------------------------------------------
 
@@ -82,7 +82,7 @@ $MsgCorps += "<table><thead><tr><th>Option</th><th>Etat</th></tr></thead><tbody>
 #
 # UAC
 #
-if((Get-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System').ConsentPromptBehaviorAdmin -ge 2) {
+if((Get-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System' -ErrorAction SilentlyContinue).ConsentPromptBehaviorAdmin -ge 2) {
     $MsgCorps += "<tr><td>Contrôle de compte utilisateur (UAC)</td><td><span style='color:green'>Activé</span></td></tr>"
 }
 else
@@ -150,7 +150,7 @@ switch($ExecPowershell)
 #
 # Mise à jour WSUS
 #
-$WSUSAUOptions = (Get-ItemProperty 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU').AUOptions
+$WSUSAUOptions = (Get-ItemProperty 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU' -ErrorAction SilentlyContinue).AUOptions
 switch($WSUSAUOptions)
 {
     1{$MsgCorps += "<tr><td>Mises à jour automatiques (via WSUS)</td><td><span style=`"color:red`">Désactivées</span></td></tr>"}
@@ -163,7 +163,7 @@ switch($WSUSAUOptions)
 #
 # Mise à jour WSUS
 #
-$WUDO = (Get-ItemProperty 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\DeliveryOptimization').DODownloadMode
+$WUDO = (Get-ItemProperty 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\DeliveryOptimization' -ErrorAction SilentlyContinue).DODownloadMode
 switch($WUDO)
 {
     0{$MsgCorps += "<tr><td>Windows Update Delivery Optimization</td><td><span style=`"color:orange`">Activé : HTTP uniquement</span></td></tr>"}
